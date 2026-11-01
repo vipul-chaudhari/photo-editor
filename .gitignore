@@ -1,0 +1,9 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+.verify-logs/
+public/models/*
+!public/models/Heliosoph/
+*.local
+_to_delete/

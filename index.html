@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lightbox Photo Editor</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+</head>
+<body>
+<div class="app">
+  <header class="bar">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+        <circle cx="12" cy="12" r="9.5"/>
+        <path d="M12 2.5 15.8 9M21.5 12h-7.4M16.8 20.2 13.1 13.6M7.2 20.2 11 13.6M2.5 12h7.4M7.2 3.8 10.9 10.4"/>
+      </svg>
+      <span class="brand-name">Lightbox</span>
+      <span class="brand-tag">Prototype · v6</span>
+    </div>
+    <div class="actions">
+      <label class="btn" for="file">Open photo</label>
+      <input id="file" type="file" accept="image/*" hidden>
+      <button id="compare" class="btn" type="button" aria-pressed="false" title="Compare with the original (\)">Compare</button>
+      <button id="export" class="btn primary" type="button">Export</button>
+    </div>
+  </header>
+
+  <main class="work">
+    <section class="stage" id="stage" aria-label="Photo">
+      <div class="viewport" id="viewport">
+        <div class="frame" id="frame">
+          <canvas id="view"></canvas>
+          <canvas id="overlay" hidden></canvas>
+          <canvas id="brushLayer" hidden></canvas>
+          <div id="brushCursor" hidden></div>
+          <div class="split" id="split" hidden>
+            <div class="split-line"></div>
+            <button class="split-handle" id="splitHandle" type="button" aria-label="Move the compare divider with the arrow keys"></button>
+            <span class="split-label l">Original</span>
+            <span class="split-label r">Edited</span>
+          </div>
+        </div>
+      </div>
+      <div class="drop" id="drop" hidden>Drop to open this photo</div>
+      <footer class="status"><span id="meta">Loading…</span><span>Drop or paste a photo · \ to compare</span></footer>
+    </section>
+
+    <aside class="panel" aria-label="Adjustments">
+      <div class="block">
+        <div class="hist-head"><h2 class="section-title">Histogram</h2><span>RGB · 64 bins</span></div>
+        <canvas id="hist"></canvas>
+        <button id="auto" class="btn wide" type="button">Auto-adjust</button>
+      </div>
+      <div class="block" id="selectBlock">
+        <div class="hist-head"><h2 class="section-title">Smart select</h2><span class="ai-tag" id="aiTag">SAM 2.1 · on device</span></div>
+        <button id="selectMode" class="btn wide" type="button" aria-pressed="false">Select objects</button>
+        <div class="ai-status" id="aiStatus" hidden aria-live="polite">
+          <span id="aiText"></span>
+          <div class="meter" id="aiMeter"><i></i></div>
+        </div>
+        <p class="note" id="selectHint">Click an object to select it. Click again to add more of it; <kbd>Alt</kbd>-click to cut a part out. <kbd>Shift</kbd>-click or New object starts another one. Scroll over the photo to pick a smaller or larger selection.</p>
+        <p class="note size-note" id="sizeNote" hidden></p>
+        <div class="row2">
+          <button id="undoPt" class="btn" type="button" disabled title="Undo the last click (Ctrl+Z)">Undo click</button>
+          <button id="newObj" class="btn" type="button" disabled>New object</button>
+          <button id="invertSel" class="btn" type="button" disabled>Invert</button>
+          <button id="clearSel" class="btn" type="button" disabled>Clear</button>
+        </div>
+      </div>
+      <div class="block" id="bgBlock">
+        <div class="hist-head"><h2 class="section-title">Background</h2><span class="ai-tag" id="bgTag">ormbg · on device</span></div>
+        <button id="bgRemove" class="btn wide" type="button">Remove background</button>
+        <div class="ai-status" id="bgStatus" hidden aria-live="polite">
+          <span id="bgText"></span>
+          <div class="meter" id="bgMeter"><i></i></div>
+        </div>
+        <div id="bgOptions" class="block" hidden>
+          <div class="seg seg4" role="group" aria-label="Background">
+            <button type="button" data-bg="0" aria-pressed="true">Original</button>
+            <button type="button" data-bg="1" aria-pressed="false">Transparent</button>
+            <button type="button" data-bg="2" aria-pressed="false">Colour</button>
+            <button type="button" data-bg="3" aria-pressed="false">Blur</button>
+          </div>
+          <div class="ctl" id="bgColorRow" hidden>
+            <div class="ctl-head"><label for="bgColor">Colour</label><output for="bgColor" id="bgColorOut">#FFFFFF</output></div>
+            <div class="swatches" id="swatches"></div>
+            <input type="color" id="bgColor" value="#ffffff">
+          </div>
+          <div class="ctl" id="bgBlurRow" hidden>
+            <div class="ctl-head"><label for="bgBlur">Blur amount</label><output for="bgBlur" id="bgBlurOut">40</output></div>
+            <input type="range" id="bgBlur" min="5" max="100" step="1" value="40">
+          </div>
+          <button id="bgToSel" class="btn wide" type="button">Use subject as selection</button>
+        </div>
+      </div>
+      <div class="block" id="eraseBlock">
+        <div class="hist-head"><h2 class="section-title">Magic eraser</h2><span class="ai-tag" id="eraseTag">MI-GAN · on device</span></div>
+        <button id="eraseMode" class="btn wide" type="button" aria-pressed="false">Erase objects</button>
+        <div class="ai-status" id="eraseStatus" hidden aria-live="polite">
+          <span id="eraseText"></span>
+          <div class="meter" id="eraseMeter"><i></i></div>
+        </div>
+        <div class="ctl" id="brushRow" hidden>
+          <div class="ctl-head"><label for="brushSize">Brush size</label><output for="brushSize" id="brushOut">40 px</output></div>
+          <input type="range" id="brushSize" min="8" max="160" step="1" value="40">
+        </div>
+        <p class="note">Paint over anything you want gone; it disappears when you let go. Runs on this computer; the first use downloads about 27 MB.</p>
+        <div class="row2">
+          <button id="eraseSel" class="btn" type="button" disabled title="Erase whatever Smart select has selected">Erase selection</button>
+          <button id="undoErase" class="btn" type="button" disabled>Undo erase</button>
+        </div>
+      </div>
+      <div class="block">
+        <h2 class="section-title">Adjust</h2>
+        <div class="seg" role="group" aria-label="What the sliders and filters change">
+          <button type="button" id="tgtGlobal" aria-pressed="true">Whole photo</button>
+          <button type="button" id="tgtLocal" aria-pressed="false" disabled title="Select objects first">Selection</button>
+        </div>
+      </div>
+      <div class="block">
+        <h2 class="section-title">Filters</h2>
+        <div class="filters" id="filters"></div>
+      </div>
+      <div id="controls" class="block" style="gap:18px"></div>
+      <button id="reset" class="btn ghost wide" type="button">Reset all adjustments</button>
+      <p class="note">Edits run on your graphics chip in linear light, so nothing is uploaded. Double-click a slider's name to reset it.</p>
+    </aside>
+  </main>
+</div>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="sheet-card">
+    <h2 id="sheetTitle">Export</h2>
+    <img id="exportImg" alt="Your edited photo at full resolution">
+    <p class="note" id="exportNote"></p>
+    <div class="sheet-row">
+      <button class="btn" id="copyImg" type="button">Copy image</button>
+      <button class="btn primary" id="closeSheet" type="button">Done</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" hidden role="status" aria-live="polite"></div>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>

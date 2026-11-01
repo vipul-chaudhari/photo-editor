@@ -1,0 +1,25 @@
+{
+  "name": "lightbox-photo-editor",
+  "private": true,
+  "license": "UNLICENSED",
+  "version": "6.0.0",
+  "type": "module",
+  "description": "Lightbox: a photo editor that runs every AI model in the browser.",
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "check": "node check.mjs",
+    "test": "playwright test",
+    "verify": "bash verify.sh",
+    "fetch-models": "node tools/fetch-models.mjs",
+    "set-password": "node tools/set-password.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "@types/node": "^22.20.5",
+    "typescript": "^5.6.0",
+    "vite": "^6.0.0"
+  }
+}

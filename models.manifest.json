@@ -1,0 +1,121 @@
+[
+ {
+  "repo": "onnx-community/sam2.1-hiera-tiny-ONNX",
+  "rev": "814a066640debee5a91e70aa401fb8e17e030503",
+  "file": "config.json",
+  "size": 5814,
+  "sha256": "9813c595dfbbe73c6b40ed269a2d6252915f538b8cdef5955f48c79716414cce"
+ },
+ {
+  "repo": "onnx-community/sam2.1-hiera-tiny-ONNX",
+  "rev": "814a066640debee5a91e70aa401fb8e17e030503",
+  "file": "onnx/prompt_encoder_mask_decoder_fp16.onnx",
+  "size": 229799,
+  "sha256": "00ac7200451f246e8307aa1a1648113f47dc45625738406403a0e6b86c69fc55"
+ },
+ {
+  "repo": "onnx-community/sam2.1-hiera-tiny-ONNX",
+  "rev": "814a066640debee5a91e70aa401fb8e17e030503",
+  "file": "onnx/prompt_encoder_mask_decoder_fp16.onnx_data",
+  "size": 10454016,
+  "sha256": "027b457a53f5bd76bb401c59555448451d04b4eab6d2f6a6758406b40133ee2c"
+ },
+ {
+  "repo": "onnx-community/sam2.1-hiera-tiny-ONNX",
+  "rev": "814a066640debee5a91e70aa401fb8e17e030503",
+  "file": "onnx/prompt_encoder_mask_decoder_quantized.onnx",
+  "size": 290416,
+  "sha256": "a5f31dba5a7f03203dc3a130fdd7766f0fea952eb4aac1f55458549170eb51ff"
+ },
+ {
+  "repo": "onnx-community/sam2.1-hiera-tiny-ONNX",
+  "rev": "814a066640debee5a91e70aa401fb8e17e030503",
+  "file": "onnx/prompt_encoder_mask_decoder_quantized.onnx_data",
+  "size": 8662016,
+  "sha256": "fdb3179a32388267a944a416c0f992c77a138b69a4bfd94f0bbf7089430d7489"
+ },
+ {
+  "repo": "onnx-community/sam2.1-hiera-tiny-ONNX",
+  "rev": "814a066640debee5a91e70aa401fb8e17e030503",
+  "file": "onnx/vision_encoder_fp16.onnx",
+  "size": 314925,
+  "sha256": "7773e79d589dada8e1e630cc7eb18b17b2c5b4faeb1eaab5ebf9df618ecbd50a"
+ },
+ {
+  "repo": "onnx-community/sam2.1-hiera-tiny-ONNX",
+  "rev": "814a066640debee5a91e70aa401fb8e17e030503",
+  "file": "onnx/vision_encoder_fp16.onnx_data",
+  "size": 67005504,
+  "sha256": "a4dd3759e9b6a476d991fb3493787992e78777e51462695e1bede71ae258103e"
+ },
+ {
+  "repo": "onnx-community/sam2.1-hiera-tiny-ONNX",
+  "rev": "814a066640debee5a91e70aa401fb8e17e030503",
+  "file": "onnx/vision_encoder_quantized.onnx",
+  "size": 441167,
+  "sha256": "8800fdd04b9045cb6060ba8962b83c78ce9bb0976da8f030afa073467a888524"
+ },
+ {
+  "repo": "onnx-community/sam2.1-hiera-tiny-ONNX",
+  "rev": "814a066640debee5a91e70aa401fb8e17e030503",
+  "file": "onnx/vision_encoder_quantized.onnx_data",
+  "size": 52573088,
+  "sha256": "ea1f677596dc82cef0dc317d78135d892f4b26e20a4439f899aa58d84965b324"
+ },
+ {
+  "repo": "onnx-community/sam2.1-hiera-tiny-ONNX",
+  "rev": "814a066640debee5a91e70aa401fb8e17e030503",
+  "file": "preprocessor_config.json",
+  "size": 749,
+  "sha256": "240c886b428d36b63bbb51b0c17ad4d2668d83ba851a04f09880a2b93f0b7349"
+ },
+ {
+  "repo": "onnx-community/sam2.1-hiera-tiny-ONNX",
+  "rev": "814a066640debee5a91e70aa401fb8e17e030503",
+  "file": "processor_config.json",
+  "size": 932,
+  "sha256": "17756f63e17f4e6a8af56dc28dabbddfa23401384b5b2e56367dc1c468db57a5"
+ },
+ {
+  "repo": "onnx-community/ormbg-ONNX",
+  "rev": "034e2d884afbab897e10e78fc5bb566b29533fd6",
+  "file": "config.json",
+  "size": 27,
+  "sha256": "d0b94ab052ace79177085c66a00a3f014a973edb09999cb0108bb01e65ded060"
+ },
+ {
+  "repo": "onnx-community/ormbg-ONNX",
+  "rev": "034e2d884afbab897e10e78fc5bb566b29533fd6",
+  "file": "onnx/model_fp16.onnx",
+  "size": 88117930,
+  "sha256": "06e4236d2c2fae771f56b6e4723b6ed870a554b661ea4da4a74f650bbd53cf57"
+ },
+ {
+  "repo": "onnx-community/ormbg-ONNX",
+  "rev": "034e2d884afbab897e10e78fc5bb566b29533fd6",
+  "file": "onnx/model_quantized.onnx",
+  "size": 44315205,
+  "sha256": "ffbcae62a7b675d616e64cb392ee028786c4cf74f83596590fba13733ef00171"
+ },
+ {
+  "repo": "onnx-community/ormbg-ONNX",
+  "rev": "034e2d884afbab897e10e78fc5bb566b29533fd6",
+  "file": "preprocessor_config.json",
+  "size": 283,
+  "sha256": "ed502c6ea29c5fb8aafdafdc5bcf1657dfca09888ff753e5c358672ebcfd448d"
+ },
+ {
+  "repo": "andraniksargsyan/migan",
+  "rev": "406830d0fa60666da0071c342ad2fbc8f30c5c64",
+  "file": "migan_pipeline_v2.onnx",
+  "size": 28079181,
+  "sha256": "6f1f3530a1a2324b19752018ce756088b07973cda8d7d890034ace5c8a48c40b"
+ },
+ {
+  "repo": "Heliosoph/realesrgan-onnx",
+  "rev": "488e5dda07333179f229a6205d92135eea4c25e9",
+  "file": "realesr-general-x4v3.onnx",
+  "size": 4871181,
+  "sha256": "09b757accd747d7e423c1d352b3e8f23e77cc5742d04bae958d4eb8082b76fa4"
+ }
+]
