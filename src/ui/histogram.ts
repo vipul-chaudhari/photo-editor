@@ -7,7 +7,7 @@ export function scheduleHist() { clearTimeout(histTimer); histTimer = window.set
 
 export function drawHist() {
   const { img, params } = state;
-  if (!img.w) return;
+  if (!img.w || !hist.clientWidth) return;   // hidden on phones, so there is nothing to draw
   const w = Math.min(320, img.w), h = Math.max(1, Math.round(w * img.h / img.w));
   const px = renderPixels(params, w, h);
   const BINS = 64, r = new Float32Array(BINS), g = new Float32Array(BINS), b = new Float32Array(BINS), l = new Float32Array(BINS);

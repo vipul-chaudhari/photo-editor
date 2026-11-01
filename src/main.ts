@@ -14,6 +14,7 @@ import { initEraser } from "./features/eraser/eraser";
 import { initHistory } from "./history";
 import { initPreload } from "./ui/preload";
 import { initLogin } from "./ui/login";
+import { initMobile } from "./ui/mobile";
 import { initCredits } from "./ui/credits";
 import { initTransform } from "./features/transform/transform";
 import { initEnhance } from "./features/enhance/enhance";
@@ -30,6 +31,7 @@ initEraser();
 initTransform();
 initEnhance();
 initCredits();
+initMobile();
 
 const s = samplePhoto();
 setImage(s, s.width, s.height, "sample", true, false);

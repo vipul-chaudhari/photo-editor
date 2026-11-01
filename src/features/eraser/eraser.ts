@@ -201,6 +201,10 @@ function undoErase() {
   if (topEntry()?.kind === "erase") undo();
 }
 
+/* A second finger landed: that's a zoom, so the stroke so far doesn't count. */
+export function cancelStroke() {
+  if (stroke) { stroke = null; clearBrush(); }
+}
 export function syncBrushLayer() {
   brushLayer.width = state.sel.w; brushLayer.height = state.sel.h;
   clearBrush();
@@ -230,6 +234,7 @@ export function initEraser() {
   frame.addEventListener("pointermove", e => {
     if (!state.erasing) return;
     const p = brushPoint(e);
+    if (e.pointerType === "touch") { if (stroke) paintTo(p); return; }   // no cursor under a finger
     brushCursor.hidden = false;
     brushCursor.style.left = p.sx + "px"; brushCursor.style.top = p.sy + "px";
     if (stroke) paintTo(p);

@@ -165,6 +165,9 @@ export const bctx = base.getContext("2d", { willReadFrequently: true })!;
 
 /* ---------- Display sizing ---------- */
 export const viewport = $("viewport"), frame = $("frame");
+/* Zoomed in, the display needs more of the photo's real pixels to stay sharp. */
+let detail = 1;
+export function setDetail(z: number) { detail = z; fit(); }
 export function fit() {
   const { img } = state;
   if (!img.w) return;
@@ -176,8 +179,8 @@ export function fit() {
   const cw = Math.max(1, Math.floor(img.w * s)), ch = Math.max(1, Math.floor(img.h * s));
   frame.style.width = cw + "px"; frame.style.height = ch + "px";
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  view.width = Math.min(img.w, Math.round(cw * dpr));
-  view.height = Math.min(img.h, Math.round(ch * dpr));
+  view.width = Math.min(img.w, Math.round(cw * dpr * detail));
+  view.height = Math.min(img.h, Math.round(ch * dpr * detail));
   draw();
 }
 new ResizeObserver(fit).observe(viewport);

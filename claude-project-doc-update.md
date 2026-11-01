@@ -90,6 +90,7 @@ model cache are always available, so the AI runs on the GPU at about 5 s per pho
 | 7 | Edit tools: crop, rotate, flip, resize, Sharpen slider | Browser | Built |
 | 8 | Enhance: sharpen photos with AI and restore their texture | Browser (ONNX Runtime Web 1.22, Real-ESRGAN) | Built |
 | 9 | First-run download screen, models served by the app itself, credits page, Enhance strength, clean cut-out edges | Browser | Built |
+| 10 | Phone layout: photo always on screen, bottom tool tabs, pinch and double-tap zoom | Browser | Built |
 
 Next ideas: text and stickers as layers, sharper selection edges (larger SAM), touch testing on phones, text-prompt selection with SAM 3 (needs a server).
 
@@ -196,6 +197,12 @@ Numbers can't show whether a face looks right, so a person should judge the resu
 - Cut-out edges: the matte's soft edge is pulled in slightly, and half-transparent pixels use the subject's estimated colour instead of their own, which still holds some of the old background. `?v6matte` turns this off for the v6 comparison test only.
 - Licence texts ship in `public/licenses`, and the Credits button in the status bar lists them.
 - Login: a startup screen checks a salted PBKDF2 hash in the browser, and a sign-in lasts 8 hours. There is no server, so this keeps casual visitors out but is not real protection: anyone reading the code can get past it. Real protection needs a login on the hosting side. A changed password applies to that browser only.
+
+## Phone layout (Phase 10)
+
+- At phone sizes the app fills one screen and never scrolls as a page: a compact header, the photo, one group of tools, then a bottom tab bar. Tapping the open tab closes the panel and gives the photo the whole screen. All of it is CSS in a media query plus `src/ui/mobile.ts`, so the desktop layout is unchanged.
+- Pinch zooms up to 6x, one finger pans when zoomed and no tool is active, and a double tap switches between fitted and 2.5x. A second finger during an eraser stroke cancels the stroke and zooms instead. Zooming never affects the exported image.
+- Known gap: Smart select's exclude and new-object shortcuts use Alt and Shift, which a phone doesn't have. New object has a button; exclude has no touch equivalent yet.
 
 ## Trade-offs
 
