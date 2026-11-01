@@ -195,3 +195,10 @@ input[type="range"]::-moz-range-thumb { width: 12px; height: 12px; background: v
   .panel { max-height: none; border-radius: 0; overflow-y: auto; }
   .mobile-tabs { grid-column: 2; }
 }
+
+/* Touch sliders: fingers are handled by the row (see mobile.ts), so scrolling can't change a value by accident. */
+@media (hover: none) and (pointer: coarse) {
+  .panel .ctl:has(input[type="range"]) { touch-action: pan-y; }
+  .panel input[type="range"] { pointer-events: none; }
+  .ctl.dragging { background: var(--accent-soft); border-radius: 8px; box-shadow: 0 0 0 6px var(--accent-soft); }
+}

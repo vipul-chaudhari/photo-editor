@@ -42,6 +42,53 @@ function initTabs() {
   show(0);
 }
 
+/* ---------- Touch sliders ---------- */
+/* A finger scrolling the panel often lands on a slider, and a native slider jumps as soon as it's touched.
+   So on touch screens the native slider ignores fingers (theme.css), and its whole row listens instead:
+   up and down scroll the panel, and only a clear sideways drag moves the value, from where it already was. */
+const DRAG_START = 10;   // px of movement before a drag counts as deliberate
+
+function initTouchSliders() {
+  const panel = document.querySelector(".panel") as HTMLElement;
+  let drag: { el: HTMLInputElement; row: HTMLElement; id: number; x: number; y: number; value: number; on: boolean } | null = null;
+
+  panel.addEventListener("pointerdown", e => {
+    if (e.pointerType !== "touch" || drag) return;
+    const row = (e.target as HTMLElement).closest<HTMLElement>(".ctl");
+    const el = row?.querySelector<HTMLInputElement>('input[type="range"]');
+    if (!row || !el || el.disabled) return;
+    drag = { el, row, id: e.pointerId, x: e.clientX, y: e.clientY, value: +el.value, on: false };
+  });
+  panel.addEventListener("pointermove", e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (!drag.on) {
+      if (Math.abs(dx) < DRAG_START || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+      drag.on = true;
+      drag.x = e.clientX;   // counted from here, so the value doesn't jump when the drag is recognised
+      drag.row.classList.add("dragging");
+      drag.row.setPointerCapture(e.pointerId);
+      return;
+    }
+    const { el } = drag, min = +el.min, max = +el.max, step = +el.step || 1;
+    const raw = drag.value + (e.clientX - drag.x) / el.getBoundingClientRect().width * (max - min);
+    const next = Math.max(min, Math.min(max, Math.round(raw / step) * step));
+    if (next === +el.value) return;
+    el.value = String(next);
+    el.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+  const end = (e: PointerEvent) => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const { el, row, on } = drag;
+    drag = null;
+    if (!on) return;
+    row.classList.remove("dragging");
+    el.dispatchEvent(new Event("change", { bubbles: true }));
+  };
+  panel.addEventListener("pointerup", end);
+  panel.addEventListener("pointercancel", end);
+}
+
 /* ---------- Zoom ---------- */
 let zoom = 1, panX = 0, panY = 0;
 const MAX_ZOOM = 6;
@@ -122,5 +169,6 @@ function initZoom() {
 
 export function initMobile() {
   initTabs();
+  initTouchSliders();
   initZoom();
 }

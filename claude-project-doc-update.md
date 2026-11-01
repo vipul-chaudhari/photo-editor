@@ -202,6 +202,7 @@ Numbers can't show whether a face looks right, so a person should judge the resu
 
 - At phone sizes the app fills one screen and never scrolls as a page: a compact header, the photo, one group of tools, then a bottom tab bar. Tapping the open tab closes the panel and gives the photo the whole screen. All of it is CSS in a media query plus `src/ui/mobile.ts`, so the desktop layout is unchanged.
 - Pinch zooms up to 6x, one finger pans when zoomed and no tool is active, and a double tap switches between fitted and 2.5x. A second finger during an eraser stroke cancels the stroke and zooms instead. Zooming never affects the exported image.
+- Touch sliders: scrolling the panel often lands a finger on a slider, and a native slider jumps as soon as it's touched. So on touch screens the row handles the gesture: up and down scroll, a tap does nothing, and only a clear sideways drag changes the value, relative to where it was. A row highlights while it's being dragged.
 - Known gap: Smart select's exclude and new-object shortcuts use Alt and Shift, which a phone doesn't have. New object has a button; exclude has no touch equivalent yet.
 
 ## Trade-offs
